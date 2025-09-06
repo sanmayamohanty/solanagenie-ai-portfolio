@@ -1,0 +1,44 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useAuthStore } from '@/store/auth';
+import web3auth from '@/lib/web3auth';
+
+export default function Web3AuthProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { setWeb3Auth, setProvider, setIsConnected, setUser, setPublicKey } = useAuthStore();
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await web3auth.initModal();
+        setWeb3Auth(web3auth);
+
+        if (web3auth.connected) {
+          setProvider(web3auth.provider);
+          setIsConnected(true);
+          
+          const user = await web3auth.getUserInfo();
+          setUser(user);
+
+          // Get user's public key
+          if (web3auth.provider) {
+            const publicKey = await web3auth.provider.request({
+              method: "getAccounts",
+            });
+            setPublicKey(publicKey[0]);
+          }
+        }
+      } catch (error) {
+        console.error('Web3Auth initialization error:', error);
+      }
+    };
+
+    init();
+  }, [setWeb3Auth, setProvider, setIsConnected, setUser, setPublicKey]);
+
+  return <>{children}</>;
+}

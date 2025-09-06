@@ -33,7 +33,43 @@ ALWAYS START WITH:
 4. **Update**: Mark tasks as completed IMMEDIATELY after finishing
 5. **Never assume**: Always verify existing code patterns and dependencies
 
-#### 🔧 Development Standards
+#### 🔑 API Key & Credential Management (CRITICAL)
+
+### NEVER HALLUCINATE API KEYS (PROJECT FAILURE PREVENTION)
+**WARNING**: Using fake/invalid API keys will cause complete project failure.
+
+#### Mandatory Credential Validation Protocol
+1. **ALWAYS use .env.local**: Never make up or hardcode credentials
+2. **Copy EXACTLY**: API keys must be copied character-for-character from .env.local
+3. **Stop if missing**: If any credential appears invalid, STOP and notify user
+4. **Test early**: Validate API connections before proceeding with implementation
+
+#### Available Credentials Checklist ✅
+```bash
+# Verify these exist in .env.local before starting:
+✅ NEXT_PUBLIC_WEB3AUTH_CLIENT_ID=BI-QNZewb8zbBbDo...
+✅ WEB3AUTH_CLIENT_SECRET=1683d312849a27b0...  
+✅ MISTRAL_API_KEY=SzdfNTY76YSNqgHvcK5tJI6lgk0YDtg7
+✅ NEXT_PUBLIC_SOLANA_RPC_URL=https://devnet.helius-rpc.com/?api-key=40c299ba...
+✅ NEXTAUTH_SECRET=e1bb625cf03f78d25a25e724aceadb43
+✅ All other environment variables properly configured
+```
+
+#### Critical Rules (NEVER BREAK)
+- **NO FAKE KEYS**: Never use placeholder values like "your-api-key-here"
+- **NO HARDCODING**: Always use `process.env.VARIABLE_NAME`
+- **EXACT COPYING**: Copy credentials exactly from .env.local
+- **IMMEDIATE TESTING**: Test API connections after setup
+
+#### Failure Prevention Checklist
+Before any API integration:
+- [ ] Read .env.local to confirm key exists
+- [ ] Copy key exactly (no modifications)
+- [ ] Use proper environment variable reference
+- [ ] Test API connection with actual key
+- [ ] Handle authentication errors gracefully
+
+## 🔧 Development Standards
 - **TypeScript STRICT**: All code must be properly typed
 - **Component Structure**: Follow existing patterns in components/
 - **State Management**: Use Zustand for global state

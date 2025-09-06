@@ -35,7 +35,7 @@ export function useBalance() {
     const interval = setInterval(fetchBalance, 30000);
 
     return () => clearInterval(interval);
-  }, [publicKey, setBalance, setLoading, setError]);
+  }, [publicKey]);
 
   return { balance };
 }

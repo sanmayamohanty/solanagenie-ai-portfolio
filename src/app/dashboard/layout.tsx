@@ -18,7 +18,7 @@ export default function DashboardLayout({
     if (!isConnected) {
       router.push('/');
     }
-  }, [isConnected, router]);
+  }, [isConnected]);
 
   if (!isConnected) {
     return (

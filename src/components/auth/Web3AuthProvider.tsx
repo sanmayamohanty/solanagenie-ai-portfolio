@@ -14,7 +14,7 @@ export default function Web3AuthProvider({
   useEffect(() => {
     const init = async () => {
       try {
-        await web3auth.initModal();
+        await web3auth.init();
         setWeb3Auth(web3auth);
 
         if (web3auth.connected) {
@@ -22,14 +22,16 @@ export default function Web3AuthProvider({
           setIsConnected(true);
           
           const user = await web3auth.getUserInfo();
-          setUser(user);
+          setUser(user as any);
 
           // Get user's public key
           if (web3auth.provider) {
-            const publicKey = await web3auth.provider.request({
+            const accounts = await web3auth.provider.request({
               method: "getAccounts",
             });
-            setPublicKey(publicKey[0]);
+            if (Array.isArray(accounts) && accounts.length > 0) {
+              setPublicKey(accounts[0] as string);
+            }
           }
         }
       } catch (error) {

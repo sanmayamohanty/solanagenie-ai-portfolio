@@ -1,4 +1,4 @@
-import { createTransferFields, parseURL, validateTransferFields } from '@solana/pay';
+import { parseURL } from '@solana/pay';
 import { PublicKey } from '@solana/web3.js';
 import QRCode from 'qrcode';
 
@@ -54,7 +54,10 @@ export const generateQRCode = async (paymentURL: URL): Promise<string> => {
 export const validatePaymentURL = (url: string): boolean => {
   try {
     const parsedURL = parseURL(url);
-    validateTransferFields(parsedURL);
+    // Basic validation - check if parsedURL is valid
+    if ('recipient' in parsedURL && parsedURL.recipient) {
+      new PublicKey(parsedURL.recipient);
+    }
     return true;
   } catch (error) {
     console.error('Invalid payment URL:', error);

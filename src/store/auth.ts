@@ -1,16 +1,27 @@
 import { create } from 'zustand';
 import { Web3Auth } from "@web3auth/modal";
+import { IProvider, UserInfo as Web3AuthUserInfo } from "@web3auth/base";
+
+interface UserInfo extends Partial<Web3AuthUserInfo> {
+  email?: string;
+  name?: string;
+  profileImage?: string;
+  aggregateVerifier?: string;
+  verifier?: string;
+  verifierId?: string;
+  typeOfLogin?: string;
+}
 
 interface AuthState {
   web3auth: Web3Auth | null;
-  provider: any;
+  provider: IProvider | null;
   isConnected: boolean;
-  user: any;
+  user: UserInfo | null;
   publicKey: string | null;
   setWeb3Auth: (web3auth: Web3Auth) => void;
-  setProvider: (provider: any) => void;
+  setProvider: (provider: IProvider | null) => void;
   setIsConnected: (connected: boolean) => void;
-  setUser: (user: any) => void;
+  setUser: (user: UserInfo | null) => void;
   setPublicKey: (publicKey: string | null) => void;
   logout: () => void;
 }

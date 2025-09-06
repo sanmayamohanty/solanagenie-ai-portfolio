@@ -29,13 +29,15 @@ export default function LoginButton() {
       setIsConnected(true);
 
       const user = await web3auth.getUserInfo();
-      setUser(user);
+      setUser(user as any);
 
       if (web3authProvider) {
         const accounts = await web3authProvider.request({
           method: "getAccounts",
         });
-        setPublicKey(accounts[0]);
+        if (Array.isArray(accounts) && accounts.length > 0) {
+          setPublicKey(accounts[0] as string);
+        }
       }
 
       // Redirect to dashboard after successful login

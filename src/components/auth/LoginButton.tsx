@@ -37,6 +37,9 @@ export default function LoginButton() {
         });
         setPublicKey(accounts[0]);
       }
+
+      // Redirect to dashboard after successful login
+      window.location.href = '/dashboard';
     } catch (error) {
       console.error('Login failed:', error);
     } finally {
